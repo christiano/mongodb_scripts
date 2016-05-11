@@ -8,11 +8,13 @@ This script uses https://pypi.python.org/pypi/fake-factory Fake Factory Python m
 Requirements
 ------------
 
-fake-factory==0.5.7
-ipaddress==1.0.16
-pymongo==3.2.2
-python-dateutil==2.5.3
-six==1.10.0
+Python dependencies::
+
+    fake-factory==0.5.7
+    ipaddress==1.0.16
+    pymongo==3.2.2
+    python-dateutil==2.5.3
+    six==1.10.0
 
 Notes
 -----
@@ -23,5 +25,5 @@ Author
 ------
 
 Christiano Anderson - http://christiano.me
+
 Twitter: @dump
- 
