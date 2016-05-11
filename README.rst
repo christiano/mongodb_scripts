@@ -1,6 +1,4 @@
-# mongodb_scripts
+MongoDB useful scripts
+======================
 
-Some useful MongoDB Scripts
-
-Christiano Anderson
-Twitter: @dump
+These are useful MongoDB scripts I use for training and teaching MongoDB.
