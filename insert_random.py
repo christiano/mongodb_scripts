@@ -9,13 +9,11 @@ import pymongo
 import random
 import datetime
 
-cli = pymongo.MongoClient()
 
-# cli.pybr.authenticate('user','pass')
-
-db = cli.pybr
+#cli.pybr.authenticate('user','pass')
 
 def gera_nome():
+
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     pw_length = 16
     mypw = ""
@@ -28,11 +26,15 @@ def gera_nome():
 
 
 ufs = ['AC','AP','AM','RO','PI','PE','CE','DF','RJ','SP','SC','RS','GO']
+#ufs = ['PR']
 
 while True:
+    cli = pymongo.MongoClient()
+    #cli.escola.authenticate('escola','teste')
+    db = cli.escola2
     cod = random.randint(1,9999999)
     nome = gera_nome()
-    email = nome + "@pybr.net"
+    email = nome + "@email.fake"
     agora = datetime.datetime.now()
     db.cadastro.insert({
         'cod': cod,
@@ -42,3 +44,4 @@ while True:
         'data_cadastro': agora})
 
     print nome
+    cli.close()
