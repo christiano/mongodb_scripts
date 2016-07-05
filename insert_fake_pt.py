@@ -14,12 +14,11 @@ fake = Factory.create('pt_BR')
 
 for cod in range(0,10000):
 
-    cli = pymongo.MongoClient()
+    cli = pymongo.MongoClient('mongodb://localhost:30011,localhost:30012,localhost:30013/?replicaSet=rs1')
 
     db = cli['empresa']
 
     doc = {
-        '_id': cod,
         'nome': fake.name(),
         'email': fake.email(),
         'nascimento': fake.date_time_between(start_date="-30y", end_date="now", tzinfo=None),
@@ -65,4 +64,4 @@ for cod in range(0,10000):
 
     db.funcionarios.insert(doc)
 
-    print doc['name']
+    print(doc['nome'])
