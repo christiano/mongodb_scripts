@@ -28,10 +28,11 @@ def gera_nome():
 ufs = ['AC','AP','AM','RO','PI','PE','CE','DF','RJ','SP','SC','RS','GO']
 #ufs = ['PR']
 
+
 while True:
-    cli = pymongo.MongoClient()
+    cli = pymongo.MongoClient('mongodb://endor.pybr.net:30011,endor.pybr.net:30012,endor.pybr.net:30013/?replicaSet=rs1')
+    db = cli.escola
     #cli.escola.authenticate('escola','teste')
-    db = cli.escola2
     cod = random.randint(1,9999999)
     nome = gera_nome()
     email = nome + "@email.fake"

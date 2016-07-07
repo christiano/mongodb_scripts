@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import datetime
@@ -11,10 +11,10 @@ cli = MongoClient()
 db = cli['escola']
 
 def cadastro_aluno():
-    print '** Cadastro de novo aluno **'
-    cod = raw_input('ID do Aluno: ')
-    nome = raw_input('Nome Completo: ')
-    sala = raw_input('Sala de Aula: ')
+    print('** Cadastro de novo aluno **')
+    cod = input('ID do Aluno: ')
+    nome = input('Nome Completo: ')
+    sala = input('Sala de Aula: ')
 
     col = db['alunos']
 
@@ -27,10 +27,10 @@ def cadastro_aluno():
     return(res)
 
 def cadastro_livro():
-    print '** Cadastro de novo livro **'
-    cod = raw_input('Cod do Livro: ')
-    titulo = raw_input('Titulo do Livro: ')
-    editora = raw_input('Editora: ')
+    print('** Cadastro de novo livro **')
+    cod = input('Cod do Livro: ')
+    titulo = input('Titulo do Livro: ')
+    editora = input('Editora: ')
 
     col = db['livros']
 
@@ -49,7 +49,7 @@ def consulta_todos_alunos():
     res = col.find({})
 
     for r in res:
-        print 'Cod: ', r['_id'], 'Nome: ', r['nome'],' - Sala: ', r['sala']
+        print('Cod: ', r['_id'], 'Nome: ', r['nome'], ' Sala: ', r['sala'])
 
 
 def consulta_todos_livros():
@@ -58,7 +58,7 @@ def consulta_todos_livros():
 
     res = col.find({})
 
-    print "** Todos os livros da biblioteca e status de locacal **"
+    print("** Todos os livros da biblioteca e status de locacal **")
 
     for r in res:
         if 'aluguel' in r:
@@ -66,31 +66,31 @@ def consulta_todos_livros():
         else:
             status = 'Disponivel'
 
-        print 'Cod: ', r['_id'], 'Titulo: ', r['titulo'], 'Status: ', status
+        print('Cod: ', r['_id'], 'Titulo: ', r['titulo'], 'Status: ', status)
 
 def aluguel_livro():
 
     col_livros = db['livros']
     col_alunos = db['alunos']
 
-    print "** Aluguel de livros **"
+    print("** Aluguel de livros **")
 
-    id_aluno = raw_input('Selecione o ID do Aluno: ')
+    id_aluno = input('Selecione o ID do Aluno: ')
 
     aluno = col_alunos.find_one({'_id': id_aluno})
 
-    print "Livros disponiveis para o aluno ", aluno['nome']
+    print("Livros disponiveis para o aluno ", aluno['nome'])
 
     livros_disponiveis = col_livros.find({'aluguel': {'$exists': False}})
 
     for l in livros_disponiveis:
-        print l['_id'], ' - ', l['titulo']
+        print(l['_id'], ' - ', l['titulo'])
 
-    escolha = raw_input('Escolha o ID do Livro que o aluno deseja alugar: ')
+    escolha = input('Escolha o ID do Livro que o aluno deseja alugar: ')
 
     atualiza_livro = col_livros.update_one({'_id': escolha},{'$set': {'aluguel': {'aluno_id': aluno['_id'], 'data_hora': agora}}})
 
-    print "O livro foi alugado para o aluno"
+    print("O livro foi alugado para o aluno")
 
 def devolucao_livro():
 
@@ -98,11 +98,11 @@ def devolucao_livro():
 
     todos_alugados = col_livros.find({'aluguel': {'$exists': True}})
 
-    print "** Os seguintes livros estao alugados: "
+    print("** Os seguintes livros estao alugados: ")
     for x in todos_alugados:
-        print x['_id'], x['titulo']
+        print(x['_id'], x['titulo'])
 
-    devolucao = raw_input('Escolha o ID do livro que sera devolvido: ')
+    devolucao = input('Escolha o ID do livro que sera devolvido: ')
 
     livro_dev = col_livros.find_one({'_id': devolucao})
     aluguel = livro_dev['aluguel']
@@ -110,7 +110,7 @@ def devolucao_livro():
     alteracao = col_livros.update_one({'_id': devolucao},{'$addToSet':{'historico_alugel': aluguel}})
     remocao = col_livros.update_one({'_id': devolucao},{'$unset':{'aluguel':True}})
 
-    print 'Livro devolvido com sucesso!'
+    print('Livro devolvido com sucesso!')
 
 def consulta_historico_locacao():
 
@@ -119,13 +119,13 @@ def consulta_historico_locacao():
     livros = col_livros.find({'historico_alugel': {'$exists': True}})
 
     for l in livros:
-        print l['titulo']
-        print 'Alugado ' + str(len(l['historico_alugel'])) + ' vezes.'
+        print(l['titulo'])
+        print('Alugado ' + str(len(l['historico_alugel'])) + ' vezes.')
         for h in l['historico_alugel']:
-            print 'Aluno: ', h['aluno_id'], 'Data: ', h['data_hora']
-        print '***********'
+            print('Aluno: ', h['aluno_id'], 'Data: ', h['data_hora'])
+        print('***********')
 
-print """
+print("""
 *** Bem-vindo ao sistema de Escola ***
 
 Escolha um item:
@@ -138,9 +138,9 @@ Escolha um item:
 6 - Devolucao de Livro
 7 - Consulta historico de Locacao por Livro
 
-"""
+""")
 
-opcao = raw_input('Escolha: ')
+opcao = input('Escolha: ')
 
 if opcao == '1':
     cadastro_aluno()
